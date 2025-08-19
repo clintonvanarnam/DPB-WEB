@@ -60,7 +60,7 @@
 
 <div style="display: flex; flex-direction: column; align-items: left; gap: 0px;">
   <svg viewBox="0 0 200 200">
-  <polygon id="panel" points="0,50 200,30 200,136 0,120" fill="#b7cd3c" />
+    <polygon id="panel" points="60,50 140,30 140,170 60,150" fill="#b7cd3c" />
   </svg>
 
   <div class="text-block">
@@ -84,16 +84,16 @@
   let wordIndex = 0;
 
   // === RANGE VARIABLES ===
-  const leftTopY     = { min: 24, max: 80 };
-  const leftBottomY  = { min: 115, max: 128 };
-  const rightTopY    = { min: 12, max: 60 };
-  const rightBottomY = { min: 134, max: 136 };
+  const leftTopY     = { min: 20, max: 80 };
+  const leftBottomY  = { min: 120, max: 160 };
+  const rightTopY    = { min: 10, max: 60 };
+  const rightBottomY = { min: 140, max: 160 };
 
   // === SHAPE POINTS ===
   const p1 = { x: 0, y: 50 };
   const p2 = { x: 120, y: 30 };
-  const p3 = { x: 120, y: 136 };
-  const p4 = { x: 0, y: 120 };
+  const p3 = { x: 120, y: 170 };
+  const p4 = { x: 0, y: 150 };
 
   function updatePolygon() {
     polygon.setAttribute(
@@ -110,42 +110,22 @@
     wordIndex = (wordIndex + 1) % words.length;
     wordEl.textContent = words[wordIndex];
 
-    // Alternate morphing left or right side each time
-    if (wordIndex % 2 === 0) {
-      // Morph right side
-      gsap.to([p2, p3], {
-        duration: morphDuration,
-        y: (i) => i === 0 ? random(rightTopY.min, rightTopY.max) : random(rightBottomY.min, rightBottomY.max),
-        onUpdate: updatePolygon
-      });
-    } else {
-      // Morph left side
-      gsap.to([p1, p4], {
-        duration: morphDuration,
-        y: (i) => i === 0 ? random(leftTopY.min, leftTopY.max) : random(leftBottomY.min, leftBottomY.max),
-        onUpdate: updatePolygon
-      });
-    }
-
     const fadeInDuration = morphDuration * 0.8; // 80% of morphDuration
     const pauseDuration = morphDuration * 0.1; // 10% of morphDuration
     const fadeOutDuration = morphDuration * 0.1; // 10% of morphDuration
 
     const tl = gsap.timeline();
-    tl.set(wordEl, { opacity: 0, y: 20 });
-    tl.to(wordEl, { opacity: 1, y: 0, duration: fadeInDuration, ease: "power2.out" });
-    tl.to(wordEl, { duration: pauseDuration }); // pause
-    tl.to(wordEl, { opacity: 0, y: -20, duration: fadeOutDuration, ease: "power2.inOut" });
+  tl.set(wordEl, { opacity: 0, y: 20 });
+  tl.to(wordEl, { opacity: 1, y: 0, duration: fadeInDuration, ease: "back.out(2)" });
+  tl.to(wordEl, { duration: pauseDuration }); // pause
+  tl.to(wordEl, { opacity: 0, y: -20, duration: fadeOutDuration, ease: "back.in(2)" });
 
     return tl;
 }
 
 const morphDuration = 3;
 
-const fillColors = [
-  "#E6D045", "#B7D342", "#78B64A", "#589F59", "#05B1D7", "#325EB9", "#2141AD", "#51306F",
-  "#E81669", "#96364D", "#BB3235", "#EB2127", "#D24835", "#DD672F", "#F69121", "#FFD212"
-];
+const fillColors = ["#b7cd3c", "#00A9D4", "#E6C800"];
 let fillIndex = 0;
 
 function cycleFill() {
