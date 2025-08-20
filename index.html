@@ -26,7 +26,7 @@
     }
 
     .text-block {
-      margin-top: -60px;
+      margin-top: -40px;
       text-align: left;
       font-size: 28px;
       font-weight: bold;
@@ -115,10 +115,10 @@
     const fadeOutDuration = morphDuration * 0.1; // 10% of morphDuration
 
     const tl = gsap.timeline();
-  tl.set(wordEl, { opacity: 0, y: 20 });
-  tl.to(wordEl, { opacity: 1, y: 0, duration: fadeInDuration, ease: "back.out(2)" });
-  tl.to(wordEl, { duration: pauseDuration }); // pause
-  tl.to(wordEl, { opacity: 0, y: -20, duration: fadeOutDuration, ease: "back.in(2)" });
+    tl.set(wordEl, { opacity: 0, y: 20 });
+    tl.to(wordEl, { opacity: 1, y: 0, duration: fadeInDuration, ease: "power2.inOut" });
+    tl.to(wordEl, { duration: pauseDuration }); // pause
+    tl.to(wordEl, { opacity: 0, y: -20, duration: fadeOutDuration, ease: "power2.inOut" });
 
     return tl;
 }
